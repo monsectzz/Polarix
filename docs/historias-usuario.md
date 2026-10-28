@@ -1,101 +1,102 @@
-# Historias de usuario de Polarix
+# Polarix User Stories
 
-Cada historia usa lenguaje funcional, sin describir base de datos, arquitectura ni implementación.
+These stories describe functionality without technical implementation details.
 
-## HU-01 — Iniciar sesión y acceder según el rol
+## US-01 — Sign in and access by role
 
-**Como** usuario registrado, **quiero** iniciar sesión con mis credenciales, **para** utilizar únicamente las funciones que corresponden a mi rol.
+**As a** registered user, **I want to** sign in with my credentials, **so that** I can access the functions allowed for my role.
 
-**Prioridad:** Alta  
-**Dependencias:** Usuarios registrados y roles definidos.
+**Priority:** High  
+**Dependencies:** Registered users and defined roles.
 
-**Criterios de aceptación:**
+**Acceptance criteria:**
 
-- Se solicitan correo y contraseña.
-- Las credenciales válidas permiten el acceso.
-- Las credenciales inválidas muestran un mensaje y no permiten entrar.
-- La sesión permanece activa solo durante el tiempo establecido por el equipo.
-- Al cerrar sesión, las funciones privadas dejan de estar disponibles.
+- The user is asked for an email and password.
+- Valid credentials allow access.
+- Invalid credentials deny access and show a clear message.
+- The session expires after the inactivity period defined by the team.
+- Signing out makes private functions unavailable.
 
-**Reglas de negocio:** Solo usuarios registrados pueden entrar; las opciones disponibles dependen del rol; una sesión inactiva debe cerrarse después del tiempo definido.
+**Business rules:** Only registered users may sign in. Available options depend on the user's role.
 
-## HU-02 — Administrar productos
+## US-02 — Manage products
 
-**Como** gerente, **quiero** registrar, modificar, consultar y desactivar productos, **para** mantener actualizado el catálogo de la tienda.
+**As a** manager, **I want to** create, update, view, and deactivate products, **so that** the store catalog remains accurate.
 
-**Prioridad:** Alta  
-**Dependencias:** HU-01 y categorías de productos disponibles.
+**Priority:** High  
+**Dependencies:** US-01 and available product categories.
 
-**Criterios de aceptación:**
+**Acceptance criteria:**
 
-- El gerente puede crear, editar y desactivar productos.
-- Cada producto tiene nombre, precio, categoría, existencia y nivel mínimo.
-- No se aceptan precios ni existencias negativas.
-- Los productos desactivados no pueden seleccionarse en una venta.
+- The manager can create, update, and deactivate products.
+- Each product has a name, price, category, stock quantity, and minimum level.
+- Negative prices and quantities are rejected.
+- Deactivated products cannot be selected for a sale.
 
-**Reglas de negocio:** Solo el gerente puede administrar productos; el precio debe ser mayor que cero; un producto con ventas registradas no se elimina, se desactiva.
+**Business rules:** Only the manager may manage products. A product with sales cannot be deleted; it must be deactivated.
 
-## HU-03 — Registrar una venta
+## US-03 — Register a sale
 
-**Como** empleado, **quiero** registrar los productos y cantidades vendidos, **para** cobrar al cliente y mantener actualizadas las existencias.
+**As an** employee, **I want to** record the products and quantities sold, **so that** I can charge the customer and keep stock accurate.
 
-**Prioridad:** Alta  
-**Dependencias:** HU-01 y HU-02.
+**Priority:** High  
+**Dependencies:** US-01, active products, and available stock.
 
-**Criterios de aceptación:**
+**Acceptance criteria:**
 
-- Se pueden seleccionar productos activos y cantidades disponibles.
-- Se calculan subtotal, total, pago recibido y cambio.
-- No se permite confirmar una venta sin productos o con cantidades insuficientes.
-- La venta registra al empleado responsable.
-- La existencia se actualiza al confirmar la venta.
+- Active products and available quantities can be selected.
+- A quantity greater than the available stock is rejected.
+- The total, payment received, and change are calculated.
+- A sale cannot be confirmed when payment is insufficient.
+- Confirming a sale records the responsible employee and updates stock.
 
-**Reglas de negocio:** El empleado debe tener una sesión activa; el pago recibido debe cubrir el total; una venta confirmada no puede modificarse sin autorización del gerente.
+**Business rules:** The employee must have an active session. A confirmed sale cannot be changed without manager authorization.
 
-## HU-04 — Consultar inventario
+## US-04 — Check inventory
 
-**Como** gerente, **quiero** consultar las existencias y los niveles mínimos, **para** identificar oportunamente los productos que necesitan reposición.
+**As a** manager, **I want to** view current stock and minimum levels, **so that** I can identify products that need replenishment.
 
-**Prioridad:** Alta  
-**Dependencias:** HU-02 y HU-03.
+**Priority:** High  
+**Dependencies:** US-02 and confirmed sales or deliveries.
 
-**Criterios de aceptación:**
+**Acceptance criteria:**
 
-- Se muestra la existencia actual de cada producto.
-- Se identifican los productos que están en el nivel mínimo o por debajo.
-- Las ventas reducen existencias y las entradas las incrementan.
+- Current stock is displayed for each product.
+- Products at or below their minimum level are identified.
+- Sales decrease stock and deliveries increase it.
 
-**Reglas de negocio:** Solo el gerente puede consultar el inventario completo; no se puede registrar una salida superior a la existencia disponible.
+**Business rules:** Stock cannot become negative. Only confirmed operations affect the displayed quantity.
 
-## HU-05 — Solicitar reabastecimiento
+## US-05 — Request replenishment
 
-**Como** gerente, **quiero** solicitar productos a un proveedor y consultar el estado de la solicitud, **para** mantener abastecida la tienda.
+**As a** manager, **I want to** request products from a supplier and track the request status, **so that** the store remains supplied.
 
-**Prioridad:** Media  
-**Dependencias:** HU-01, HU-02 y proveedores registrados.
+**Priority:** Medium  
+**Dependencies:** US-01, US-02, and registered suppliers.
 
-**Criterios de aceptación:**
+**Acceptance criteria:**
 
-- La solicitud incluye proveedor, producto, cantidad y fecha.
-- La cantidad solicitada es mayor que cero.
-- La solicitud inicia como pendiente y permite consultar su estado.
-- Al recibir el pedido, la existencia aumenta.
+- A request includes a supplier, product, quantity, and date.
+- The requested quantity must be greater than zero.
+- A new request starts as pending.
+- The request status can be viewed.
+- Receiving the delivery increases the product stock.
 
-**Reglas de negocio:** Solo el gerente puede crear o cambiar solicitudes; una solicitud cancelada no puede marcarse como recibida; la recepción debe corresponder a un producto solicitado.
+**Business rules:** Only the manager may create or change requests. A cancelled request cannot be marked as received.
 
-## HU-06 — Realizar cierre de caja
+## US-06 — Close the cash register
 
-**Como** gerente, **quiero** cerrar la caja y comparar el efectivo esperado con el efectivo contado, **para** verificar las ventas del periodo.
+**As a** manager, **I want to** compare expected cash with counted cash, **so that** I can verify the sales for the period.
 
-**Prioridad:** Alta  
-**Dependencias:** HU-03 y ventas del periodo registradas.
+**Priority:** High  
+**Dependencies:** US-03 and confirmed sales for the selected period.
 
-**Criterios de aceptación:**
+**Acceptance criteria:**
 
-- Se calcula el total vendido en el periodo seleccionado.
-- Se puede capturar el efectivo contado.
-- Se muestra la diferencia entre el efectivo esperado y el contado.
-- El cierre registra fecha, responsable y resultado.
-- Un cierre confirmado no puede modificarse sin autorización.
+- The sales total for the selected period is calculated.
+- Counted cash can be entered.
+- Any difference, shortage, or surplus is displayed.
+- The closing records the date, responsible person, and result.
+- A confirmed closing cannot be changed without authorization.
 
-**Reglas de negocio:** Solo el gerente puede confirmar el cierre; cada periodo solo puede tener un cierre confirmado; el cierre requiere una sesión activa.
+**Business rules:** Only the manager may confirm a closing. Each period may have one confirmed closing.
