@@ -12,8 +12,9 @@ The implementation uses PDO prepared statements, password hashing, sessions, rol
 
 1. Start Apache and MySQL.
 2. Run `database/schema.sql` in phpMyAdmin.
-3. Configure database variables if your MySQL credentials are not the defaults.
-4. Serve the project from Apache and call `public/api/login.php` and `public/api/sales.php`.
+3. Run `php database/seed.php` to create demo data.
+4. Configure database variables if your MySQL credentials are not the defaults.
+5. Serve the project from Apache and call `public/api/login.php` and `public/api/sales.php`.
 
 ## Integration test
 
